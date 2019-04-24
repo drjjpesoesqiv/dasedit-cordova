@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+     KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+<html>
+    <head>
+        <!--
+        Customize this policy to fit your own app's needs. For more guidance, see:
+            https://github.com/apache/cordova-plugin-whitelist/blob/master/README.md#content-security-policy
+        Some notes:
+            * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
+            * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
+            * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
+                * Enable inline JS: add 'unsafe-inline' to default-src
+        -->
+        <meta http-equiv="Content-Security-Policy" content="style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">
+        <meta name="format-detection" content="telephone=no">
+        <meta name="msapplication-tap-highlight" content="no">
+        <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover">
+        <link rel="stylesheet" type="text/css" href="css/index.css">
+        <link href="css/all.css" rel="stylesheet">
+        <title>dasedit</title>
+    </head>
+    <body>
+        <div id="editor">
+            <div id="toolbar">
+                <i data-toggle="#options" class="fas fa-cog fa-2x btnToggle"></i>
+                <i data-toggle="#codeMirror_html" class="fab fa-html5 fa-2x btnToggle selected"></i>
+                <i data-toggle="#codeMirror_css" class="fab fa-css3-alt fa-2x btnToggle"></i>
+                <i data-toggle="#codeMirror_js" class="fab fa-js fa-2x btnToggle"></i>
+                <i data-toggle="#codeMirror_json" class="fas fa-database fa-2x btnToggle"></i>
+                <i data-toggle="#preview" class="fas fa-globe-americas fa-2x btnToggle"></i>
+                <i id="btnSave" class="fas fa-save fa-2x"></i>
+                <i data-toggle="#help" id="helpToggle" class="fas fa-info-circle fa-2x btnToggle"></i>
+            </div>
+            <div id="panels">
+                <div class="panel" id="help">
+                    <p><i class="fab fa-html5"></i> is for HTML code.</p>
+                    <p><i class="fab fa-css3-alt"></i> is for CSS code.</p>
+                    <p><i class="fab fa-js"></i> is for JS code.</p>
+                    <p>
+                        <i class="fas fa-database"></i> is for a JSON object.
+                        <br />
+                        You can access the JSON object from the JS code by using the jsonData variable.
+                    </p>
+                    <p><i class="fas fa-globe-americas"></i> will let you preview the compiled HTML.</p>
+                    <p>
+                        <i class="fas fa-save"></i> will save the compiled HTML.
+                        <br />
+                        HTML file is saved to something like <strong>Android/data/com.jjpeso.dasedit/files</strong>.
+                        <br />
+                        Saving will overwrite any file with same title.
+                    </p>
+                    <p><i class="fas fa-trash-alt"></i> will clear all code.</p>
+                </div>
+                <div class="panel" id="options">
+                    <p><label>title</label><input type="text" id="title" value="page" placeholder="title" /></p>
+
+                    <p><label>Include jQuery?</label><input type="checkbox" id="includeJQuery" /></p>
+
+                    <p><label>html</label><select id="options_theme_html" name="options_theme_html"></select></p>
+                    <p><label>css</label><select id="options_theme_css" name="options_theme_css"></select></p>
+                    <p><label>js</label><select id="options_theme_js" name="options_theme_js"></select></p>
+                    <p><label>json</label><select id="options_theme_json" name="options_theme_json"></select></p>
+
+                    <i id="btnTrash" class="fas fa-trash-alt fa-2x"></i>
+                </div>
+                <iframe class="panel" id="preview" src=""></iframe>
+                <textarea id="codeMirror_html"></textarea>
+                <textarea id="codeMirror_css"></textarea>
+                <textarea id="codeMirror_js"></textarea>
+                <textarea id="codeMirror_json"></textarea>
+            </div>
+        </div>
+
+        <script type="text/javascript" src="cordova.js"></script>
+
+        <script src="js/jquery-3.3.1.min.js"></script>
+        <script src="js/App.js"></script>
+        <script src="js/Editor.js"></script>
+        <script src="js/File.js"></script>
+        <script src="js/Storage.js"></script>
+
+        <script type="text/javascript" src="js/index.js"></script>
+
+<link rel="stylesheet" href="codemirror/lib/codemirror.css" />
+<link rel="stylesheet" href="codemirror/addon/hint/show-hint.css" />
+<link rel="stylesheet" href="codemirror/addon/display/fullscreen.css">
+
+<link rel="stylesheet" href="codemirror/theme/3024-day.css">
+<link rel="stylesheet" href="codemirror/theme/3024-night.css">
+<link rel="stylesheet" href="codemirror/theme/abcdef.css">
+<link rel="stylesheet" href="codemirror/theme/ambiance.css">
+<link rel="stylesheet" href="codemirror/theme/base16-dark.css">
+<link rel="stylesheet" href="codemirror/theme/bespin.css">
+<link rel="stylesheet" href="codemirror/theme/base16-light.css">
+<link rel="stylesheet" href="codemirror/theme/blackboard.css">
+<link rel="stylesheet" href="codemirror/theme/cobalt.css">
+<link rel="stylesheet" href="codemirror/theme/colorforth.css">
+<link rel="stylesheet" href="codemirror/theme/dracula.css">
+<link rel="stylesheet" href="codemirror/theme/duotone-dark.css">
+<link rel="stylesheet" href="codemirror/theme/duotone-light.css">
+<link rel="stylesheet" href="codemirror/theme/eclipse.css">
+<link rel="stylesheet" href="codemirror/theme/elegant.css">
+<link rel="stylesheet" href="codemirror/theme/erlang-dark.css">
+<link rel="stylesheet" href="codemirror/theme/gruvbox-dark.css">
+<link rel="stylesheet" href="codemirror/theme/hopscotch.css">
+<link rel="stylesheet" href="codemirror/theme/icecoder.css">
+<link rel="stylesheet" href="codemirror/theme/isotope.css">
+<link rel="stylesheet" href="codemirror/theme/lesser-dark.css">
+<link rel="stylesheet" href="codemirror/theme/liquibyte.css">
+<link rel="stylesheet" href="codemirror/theme/lucario.css">
+<link rel="stylesheet" href="codemirror/theme/material.css">
+<link rel="stylesheet" href="codemirror/theme/mbo.css">
+<link rel="stylesheet" href="codemirror/theme/mdn-like.css">
+<link rel="stylesheet" href="codemirror/theme/midnight.css">
+<link rel="stylesheet" href="codemirror/theme/monokai.css">
+<link rel="stylesheet" href="codemirror/theme/neat.css">
+<link rel="stylesheet" href="codemirror/theme/neo.css">
+<link rel="stylesheet" href="codemirror/theme/night.css">
+<link rel="stylesheet" href="codemirror/theme/nord.css">
+<link rel="stylesheet" href="codemirror/theme/oceanic-next.css">
+<link rel="stylesheet" href="codemirror/theme/panda-syntax.css">
+<link rel="stylesheet" href="codemirror/theme/paraiso-dark.css">
+<link rel="stylesheet" href="codemirror/theme/paraiso-light.css">
+<link rel="stylesheet" href="codemirror/theme/pastel-on-dark.css">
+<link rel="stylesheet" href="codemirror/theme/railscasts.css">
+<link rel="stylesheet" href="codemirror/theme/rubyblue.css">
+<link rel="stylesheet" href="codemirror/theme/seti.css">
+<link rel="stylesheet" href="codemirror/theme/shadowfox.css">
+<link rel="stylesheet" href="codemirror/theme/solarized.css">
+<link rel="stylesheet" href="codemirror/theme/the-matrix.css">
+<link rel="stylesheet" href="codemirror/theme/tomorrow-night-bright.css">
+<link rel="stylesheet" href="codemirror/theme/tomorrow-night-eighties.css">
+<link rel="stylesheet" href="codemirror/theme/ttcn.css">
+<link rel="stylesheet" href="codemirror/theme/twilight.css">
+<link rel="stylesheet" href="codemirror/theme/vibrant-ink.css">
+<link rel="stylesheet" href="codemirror/theme/xq-dark.css">
+<link rel="stylesheet" href="codemirror/theme/xq-light.css">
+<link rel="stylesheet" href="codemirror/theme/yeti.css">
+<link rel="stylesheet" href="codemirror/theme/idea.css">
+<link rel="stylesheet" href="codemirror/theme/darcula.css">
+<link rel="stylesheet" href="codemirror/theme/zenburn.css">
+
+<script src="codemirror/lib/codemirror.js"></script>
+
+<script src="codemirror/addon/hint/show-hint.js"></script>
+<script src="codemirror/addon/hint/html-hint.js"></script>
+<script src="codemirror/addon/hint/css-hint.js"></script>
+<script src="codemirror/addon/hint/javascript-hint.js"></script>
+
+<script src="codemirror/addon/selection/active-line.js"></script>
+<script src="codemirror/addon/edit/matchbrackets.js"></script>
+<script src="codemirror/addon/display/fullscreen.js"></script>
+
+<script src="codemirror/mode/xml/xml.js"></script>
+<script src="codemirror/mode/css/css.js"></script>
+<script src="codemirror/mode/javascript/javascript.js"></script>
+
+<!-- -->
+
+<select id="theme_selections_proto" style="display: none;">
+<option value="default" selected>default</option>
+<option value="3024-day">3024-day</option>
+<option value="3024-night">3024-night</option>
+<option value="abcdef">abcdef</option>
+<option value="ambiance">ambiance</option>
+<option value="base16-dark">base16-dark</option>
+<option value="base16-light">base16-light</option>
+<option value="bespin">bespin</option>
+<option value="blackboard">blackboard</option>
+<option value="cobalt">cobalt</option>
+<option value="colorforth">colorforth</option>
+<option value="darcula">darcula</option>
+<option value="dracula">dracula</option>
+<option value="duotone-dark">duotone-dark</option>
+<option value="duotone-light">duotone-light</option>
+<option value="eclipse">eclipse</option>
+<option value="elegant">elegant</option>
+<option value="erlang-dark">erlang-dark</option>
+<option value="gruvbox-dark">gruvbox-dark</option>
+<option value="hopscotch">hopscotch</option>
+<option value="icecoder">icecoder</option>
+<option value="idea">idea</option>
+<option value="isotope">isotope</option>
+<option value="lesser-dark">lesser-dark</option>
+<option value="liquibyte">liquibyte</option>
+<option value="lucario">lucario</option>
+<option value="material">material</option>
+<option value="mbo">mbo</option>
+<option value="mdn-like">mdn-like</option>
+<option value="midnight">midnight</option>
+<option value="monokai">monokai</option>
+<option value="neat">neat</option>
+<option value="neo">neo</option>
+<option value="night">night</option>
+<option value="nord">nord</option>
+<option value="oceanic-next">oceanic-next</option>
+<option value="panda-syntax">panda-syntax</option>
+<option value="paraiso-dark">paraiso-dark</option>
+<option value="paraiso-light">paraiso-light</option>
+<option value="pastel-on-dark">pastel-on-dark</option>
+<option value="railscasts">railscasts</option>
+<option value="rubyblue">rubyblue</option>
+<option value="seti">seti</option>
+<option value="shadowfox">shadowfox</option>
+<option value="solarized dark">solarized dark</option>
+<option value="solarized light">solarized light</option>
+<option value="the-matrix">the-matrix</option>
+<option value="tomorrow-night-bright">tomorrow-night-bright</option>
+<option value="tomorrow-night-eighties">tomorrow-night-eighties</option>
+<option value="ttcn">ttcn</option>
+<option value="twilight">twilight</option>
+<option value="vibrant-ink">vibrant-ink</option>
+<option value="xq-dark">xq-dark</option>
+<option value="xq-light">xq-light</option>
+<option value="yeti">yeti</option>
+<option value="zenburn">zenburn</option>
+</select>
+
+    </body>
+</html>
